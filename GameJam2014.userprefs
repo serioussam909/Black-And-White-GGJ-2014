@@ -1,0 +1,24 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy.cs">
+    <Files>
+      <File FileName="GameJam2014.sln" Line="70" Column="1" />
+      <File FileName="Assets\PowerUp.cs" Line="24" Column="41" />
+      <File FileName="Assets\Player.cs" Line="184" Column="23" />
+      <File FileName="Assets\Standard Assets\Image Effects (Pro Only)\MotionBlur.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets\Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy.cs" Line="60" Column="4" />
+      <File FileName="Assets\DimensionVisibility.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameController.cs" Line="30" Column="53" />
+      <File FileName="Assets\Scripts\Bomb.cs" Line="1" Column="1" />
+      <File FileName="Assets\Vacuum Free\Fragmentum\Shaders\Fragmentum_Diffuse.shader" Line="1" Column="1" />
+      <File FileName="Assets\DeathZone.cs" Line="20" Column="64" />
+      <File FileName="Assets\LevelExit.cs" Line="19" Column="51" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
