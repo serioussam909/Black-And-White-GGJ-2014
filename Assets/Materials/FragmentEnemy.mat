@@ -2,16 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: FragmentEnemy
   m_Shader: {fileID: 4800000, guid: 3505b83ae92c3a04bacf31653c5d6675, type: 3}
-  m_ShaderKeywords:
-  - V_FR_ACTIVATOR_SPHERE
-  - V_FR_EDITOR_ON
+  m_ShaderKeywords: V_FR_ACTIVATOR_SPHERE V_FR_EDITOR_ON
+  m_LightmapFlags: 5
   m_CustomRenderQueue: -1
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -62,4 +62,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .903448224, g: 1, b: 0, a: 1}
+        second: {r: 0.9034482, g: 1, b: 0, a: 1}

@@ -12,7 +12,7 @@ function OnPostRender()
 		return;
 	if (!shaderCamera) {
 		shaderCamera = new GameObject("ShaderCamera", Camera);
-		shaderCamera.camera.enabled = false;
+		shaderCamera.GetComponent.<Camera>().enabled = false;
 		shaderCamera.hideFlags = HideFlags.HideAndDontSave;
 	}
 	if (!checker) {
@@ -28,8 +28,8 @@ function OnPostRender()
 		checker.filterMode = FilterMode.Point;
 		Shader.SetGlobalTexture ("_CheckerTex", checker);
 	}
-	var cam = shaderCamera.camera;
-	cam.CopyFrom (camera);
+	var cam = shaderCamera.GetComponent.<Camera>();
+	cam.CopyFrom (GetComponent.<Camera>());
 	cam.backgroundColor = Color(0,0,0,0);
 	cam.clearFlags = CameraClearFlags.SolidColor;
 	cam.RenderWithShader (shader, "RenderType");

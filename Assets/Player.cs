@@ -22,20 +22,17 @@ public class Player : MonoBehaviour {
 	public bool Alive=true;
 	public GameObject bullet;
 	Fragmentum frag;
-	public AudioClip jumpClip;
-	public AudioClip stompClip;
-	public AudioClip deathClip;
-	public AudioClip hurtClip;
-	public AudioClip powerUpClip;
-	public AudioClip shootClip;
-	AudioSource audio;
-
-	public float bulletDelay=0.3f;
+    public AudioClip[] jumpClips;
+    public AudioClip[] shootClips;
+    public AudioClip[] stompClips;
+    public AudioClip[] deathClips;
+    public AudioClip[] hurtClips;
+    public AudioClip[] powerupClips;
+    public float bulletDelay=0.3f;
 	float bulletTimer=0;
 	List<GameObject> HudLives=new List<GameObject>();
 	void Awake()
 	{
-		audio=GetComponent<AudioSource>();
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		muzzle = transform.Find("muzzle");
@@ -65,9 +62,10 @@ public class Player : MonoBehaviour {
 		{
 			return;
 		}
-		audio.PlayOneShot(hurtClip);
-		blinking=true;
-		HudLives[Lives-1].renderer.enabled=false;
+        int i = Random.Range(0, hurtClips.Length);
+        AudioSource.PlayClipAtPoint(hurtClips[i], transform.position);
+        blinking =true;
+		HudLives[Lives-1].GetComponent<Renderer>().enabled=false;
 			Lives--;
 			if(Lives<=0)
 			{
@@ -81,8 +79,8 @@ public class Player : MonoBehaviour {
 	{
 		if(!Alive)
 		{
-			muzzle.renderer.enabled=false;
-			foot.renderer.enabled=false;
+			muzzle.GetComponent<Renderer>().enabled=false;
+			foot.GetComponent<Renderer>().enabled=false;
 			if(deathTimer<4f)
 			{
 				deathTimer+=Time.deltaTime;
@@ -112,13 +110,13 @@ public class Player : MonoBehaviour {
 
 		if(GameController.Dimension==Dimension.BLACK)
 		{
-			muzzle.renderer.enabled=true;
-			foot.renderer.enabled=false;
+			muzzle.GetComponent<Renderer>().enabled=true;
+			foot.GetComponent<Renderer>().enabled=false;
 		}
 		if(GameController.Dimension==Dimension.WHITE)
 		{
-			muzzle.renderer.enabled=false;
-			foot.renderer.enabled=true;
+			muzzle.GetComponent<Renderer>().enabled=false;
+			foot.GetComponent<Renderer>().enabled=true;
 		}
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		grounded = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
@@ -133,8 +131,9 @@ public class Player : MonoBehaviour {
 				if(enemy.GetComponent<Enemy>())
 				{
 					enemy.GetComponent<Enemy>().Die();
-					audio.PlayOneShot(stompClip);
-				}
+                    int i = Random.Range(0, stompClips.Length);
+                    AudioSource.PlayClipAtPoint(stompClips[i], transform.position);
+                }
 			}
 		}
 
@@ -155,11 +154,13 @@ public class Player : MonoBehaviour {
 				{
 					xForce=-1;
 				}
-				currBullet.rigidbody.AddForce(new Vector3(xForce*200f,-200f,0));
+				currBullet.GetComponent<Rigidbody>().AddForce(new Vector3(xForce*200f,-200f,0));
 				bulletTimer=0;
-				audio.PlayOneShot(shootClip);
 				shoot=false;
-			}
+                // Play a random jump audio clip.
+                int i = Random.Range(0, shootClips.Length);
+                AudioSource.PlayClipAtPoint(shootClips[i], transform.position);
+            }
 		}
 		bulletTimer+=Time.deltaTime;
 
@@ -181,14 +182,14 @@ public class Player : MonoBehaviour {
 		
 
 		// If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-		if(h * rigidbody.velocity.x < maxSpeed)
+		if(h * GetComponent<Rigidbody>().velocity.x < maxSpeed)
 			// ... add a force to the player.
-			rigidbody.AddForce(Vector3.right * h * moveForce);
+			GetComponent<Rigidbody>().AddForce(Vector3.right * h * moveForce);
 		
 		// If the player's horizontal velocity is greater than the maxSpeed...
-		if(Mathf.Abs(rigidbody.velocity.x) > maxSpeed)
+		if(Mathf.Abs(GetComponent<Rigidbody>().velocity.x) > maxSpeed)
 			// ... set the player's velocity to the maxSpeed in the x axis.
-			rigidbody.velocity = new Vector3(Mathf.Sign(rigidbody.velocity.x) * maxSpeed, rigidbody.velocity.y,0);
+			GetComponent<Rigidbody>().velocity = new Vector3(Mathf.Sign(GetComponent<Rigidbody>().velocity.x) * maxSpeed, GetComponent<Rigidbody>().velocity.y,0);
 		
 		// If the input is moving the player right and the player is facing left...
 		if(h > 0 && !facingRight)
@@ -206,15 +207,14 @@ public class Player : MonoBehaviour {
 		//	anim.SetTrigger("Jump");
 			
 			// Play a random jump audio clip.
-		//	int i = Random.Range(0, jumpClips.Length);
-		//	AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+			int i = Random.Range(0, jumpClips.Length);
+			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
 			
 			// Add a vertical force to the player.
-			rigidbody.AddForce(new Vector2(0f, jumpForce));
+			GetComponent<Rigidbody>().AddForce(new Vector2(0f, jumpForce));
 			
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
-			audio.PlayOneShot(jumpClip);
 		}
 	}
 
@@ -223,14 +223,15 @@ public class Player : MonoBehaviour {
 		Alive=false;
 		// Switch the way the player is labelled as facing.
 		facingRight = true;
-		
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
+        int i = Random.Range(0, deathClips.Length);
+        AudioSource.PlayClipAtPoint(deathClips[i], transform.position);
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
 		theScale.x =1;
 		transform.localScale = theScale;
-		rigidbody.isKinematic=true;
-		collider.isTrigger=true;
-		audio.PlayOneShot(deathClip);
+		GetComponent<Rigidbody>().isKinematic=true;
+		GetComponent<Collider>().isTrigger=true;
 	
 	}
 	void OnCollisionEnter(Collision collision) {
@@ -242,8 +243,9 @@ public class Player : MonoBehaviour {
 				{
 					Destroy (collision.collider.gameObject);
 					Lives++;
-					audio.PlayOneShot(powerUpClip);
-					if(HudLives.Count<Lives)
+                    int i = Random.Range(0, powerupClips.Length);
+                    AudioSource.PlayClipAtPoint(powerupClips[i], transform.position);
+                    if (HudLives.Count<Lives)
 					{   
 						GameObject hudLifeInst=HudLives[HudLives.Count-1];
 						hudLifeInst=(GameObject)GameObject.Instantiate(hudLife,new Vector3( hudLifeInst.transform.position.x+1.5f,hudLifeInst.transform.position.y,hudLifeInst.transform.position.z),hudLifeInst.transform.rotation);
@@ -251,7 +253,7 @@ public class Player : MonoBehaviour {
 					}
 					else
 					{
-						HudLives[Lives-1].renderer.enabled=true;
+						HudLives[Lives-1].GetComponent<Renderer>().enabled=true;
 					}
 				}
 			}
@@ -259,7 +261,6 @@ public class Player : MonoBehaviour {
 		if(collision.collider.gameObject.layer==LayerMask.NameToLayer("EnemyBullets")&&Alive)
 		{
 			Hurt ();
-
 			Destroy (collision.collider.gameObject);
 		}
 	}

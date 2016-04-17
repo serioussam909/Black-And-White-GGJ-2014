@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
 	public float moveSpeed = 2f;		// The speed the enemy moves at.
 	public int Lives = 1;					// How many times the enemy can be hit before it dies.
-	public AudioClip[] deathClips;		// An array of audioclips that can play when the enemy dies.
+	
 	//public GameObject hundredPointsUI;	// A prefab of 100 that appears when the enemy dies.
 	public int startDir=1;
 	Fragmentum frag;
@@ -21,14 +21,14 @@ public class Enemy : MonoBehaviour
 	private bool grounded = false;	
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	GameObject player;
-	public AudioClip jumpClip;
-	public AudioClip hurtClip;
+    public AudioClip jumpClip;
+    public AudioClip hurtClip;
 
-	public AudioClip deathClip;
-	AudioSource audio;
-	void Awake()
+    public AudioClip deathClip;
+    AudioSource audio;
+    void Awake()
 	{
-		audio=GetComponent<AudioSource>();
+        audio = GetComponent<AudioSource>();
 		player=GameObject.FindGameObjectWithTag("Player");
 		int rnd=Random.Range(0,10);
 		if(rnd>4)
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
 			return;
 		}
 
-		if((transform.position-player.transform.position).sqrMagnitude>300)
+		if((transform.position-player.transform.position).sqrMagnitude>100)
 		{
 			return;
 		}
@@ -72,14 +72,14 @@ public class Enemy : MonoBehaviour
 			//	AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
 			
 			// Add a vertical force to the player.
-				rigidbody.AddForce(new Vector2(0f, jumpForce));
-				audio.PlayOneShot(jumpClip);
-			}
+				GetComponent<Rigidbody>().AddForce(new Vector2(0f, jumpForce));
+                audio.PlayOneShot(jumpClip);
+            }
 			
 
 		}
 		// Set the enemy's velocity to moveSpeed in the x direction.
-		rigidbody.velocity = new Vector3(transform.localScale.x *moveSpeed , rigidbody.velocity.y,0);	
+		GetComponent<Rigidbody>().velocity = new Vector3(transform.localScale.x *moveSpeed , GetComponent<Rigidbody>().velocity.y,0);	
 
 
 			// ... set the sprite renderer's sprite to be the damagedEnemy sprite.
@@ -98,9 +98,9 @@ public class Enemy : MonoBehaviour
 		{
 			return;
 		}
-		audio.PlayOneShot(hurtClip);
-		// Reduce the number of hit points by one.
-		Lives--;
+        audio.PlayOneShot(hurtClip);
+        // Reduce the number of hit points by one.
+        Lives--;
 		blinking=true;
 		if(Lives<=0)
 		{
@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
 		if(!dead)
 		{
 			
-			if((transform.position-player.transform.position).sqrMagnitude>300)
+			if((transform.position-player.transform.position).sqrMagnitude>100)
 			{
 				return;
 			}
@@ -184,11 +184,10 @@ public class Enemy : MonoBehaviour
 		{
 			return;
 		}
-		audio.PlayOneShot(deathClip);
-		
-		// Find all of the sprite renderers on this object and it's children.
-	
-		rigidbody.isKinematic=true;
+        audio.PlayOneShot(deathClip);
+        // Find all of the sprite renderers on this object and it's children.
+
+        GetComponent<Rigidbody>().isKinematic=true;
 
 		// Re-enable the main sprite renderer and set it's sprite to the deadEnemy sprite.
 		//ren.enabled = true;

@@ -24,15 +24,15 @@ function OnPreCull()
 {
 	if (!enabled || !gameObject.active)
 		return;
-	renderTexture = RenderTexture.GetTemporary (camera.pixelWidth, camera.pixelHeight, 24, RenderTextureFormat.Depth);
+	renderTexture = RenderTexture.GetTemporary (GetComponent.<Camera>().pixelWidth, GetComponent.<Camera>().pixelHeight, 24, RenderTextureFormat.Depth);
 	if (!shaderCamera) {
 		shaderCamera = new GameObject("ShaderCamera", Camera);
-		shaderCamera.camera.enabled = false;
+		shaderCamera.GetComponent.<Camera>().enabled = false;
 		shaderCamera.hideFlags = HideFlags.HideAndDontSave;
 	}
 	
-	var cam = shaderCamera.camera;
-	cam.CopyFrom (camera);
+	var cam = shaderCamera.GetComponent.<Camera>();
+	cam.CopyFrom (GetComponent.<Camera>());
 	cam.backgroundColor = Color(1,1,1,1);
 	cam.clearFlags = CameraClearFlags.SolidColor;
 	cam.targetTexture = renderTexture;

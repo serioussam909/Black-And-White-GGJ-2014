@@ -12,17 +12,17 @@ function OnPreCull()
 {
 	if (!enabled)
 		return;
-	oldColor = camera.backgroundColor;
-	oldClear = camera.clearFlags;
-	camera.backgroundColor = Color(0,0,0,0);
-	camera.clearFlags = CameraClearFlags.SolidColor;
-	camera.SetReplacementShader (fullOverdraw ? shaderWithoutZ : shaderWithZ, "RenderType");
+	oldColor = GetComponent.<Camera>().backgroundColor;
+	oldClear = GetComponent.<Camera>().clearFlags;
+	GetComponent.<Camera>().backgroundColor = Color(0,0,0,0);
+	GetComponent.<Camera>().clearFlags = CameraClearFlags.SolidColor;
+	GetComponent.<Camera>().SetReplacementShader (fullOverdraw ? shaderWithoutZ : shaderWithZ, "RenderType");
 }
 
 function OnPostRender() {
 	if (!enabled)
 		return;
-	camera.ResetReplacementShader();
-	camera.backgroundColor = oldColor;
-	camera.clearFlags = oldClear;
+	GetComponent.<Camera>().ResetReplacementShader();
+	GetComponent.<Camera>().backgroundColor = oldColor;
+	GetComponent.<Camera>().clearFlags = oldClear;
 }

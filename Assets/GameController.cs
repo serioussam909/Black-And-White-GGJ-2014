@@ -25,9 +25,7 @@ public class GameController : MonoBehaviour {
 	private GameObject[] lavas;
 	private GameObject[] enemies;
 	private GameObject gameOver;
-	private AudioSource audio;
 	void Start () {
-		audio=GetComponent<AudioSource>();
 		grounds=GameObject.FindGameObjectsWithTag("Ground");
 		player=GameObject.FindGameObjectWithTag("Player");
 		gameOver=GameObject.FindGameObjectWithTag("GameOver");
@@ -52,18 +50,18 @@ public class GameController : MonoBehaviour {
 		{
 			RenderSettings.fogColor=fogLight;
 			Camera.main.backgroundColor=bgLight;
-			player.renderer.sharedMaterial.color=playerLight;
+			player.GetComponent<Renderer>().sharedMaterial.color=playerLight;
 			foreach(GameObject en in enemies)
 			{
 				if(en!=null)
 				{
-					en.renderer.sharedMaterial.color=enemyLight;
+					en.GetComponent<Renderer>().sharedMaterial.color=enemyLight;
 				}
 			}
 
 			foreach(GameObject gnd in grounds)
 			{
-				gnd.renderer.material.color=groundLight;
+				gnd.GetComponent<Renderer>().material.color=groundLight;
 			}
 			foreach(GameObject water in waters)
 			{
@@ -93,17 +91,17 @@ public class GameController : MonoBehaviour {
 		{
 			RenderSettings.fogColor=fogDark;
 			Camera.main.backgroundColor=bgDark;
-			player.renderer.sharedMaterial.color=playerDark;
+			player.GetComponent<Renderer>().sharedMaterial.color=playerDark;
 			foreach(GameObject en in enemies)
 			{
 				if(en!=null)
 				{
-					en.renderer.sharedMaterial.color=enemyDark;
+					en.GetComponent<Renderer>().sharedMaterial.color=enemyDark;
 				}
 			}
 			foreach(GameObject gnd in grounds)
 			{
-				gnd.renderer.material.color=groundDark;
+				gnd.GetComponent<Renderer>().material.color=groundDark;
 			}
 			foreach(GameObject water in waters)
 			{
@@ -148,7 +146,6 @@ public class GameController : MonoBehaviour {
 		{
 			if(Input.GetButtonDown("FlipDimension"))
 			{
-				audio.Play();
 				isFlipping=true;
 				if(dimension==Dimension.WHITE)
 				{

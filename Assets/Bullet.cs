@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour {
 	float timer=0;
 
 	void Update () {
-		if(rigidbody.velocity.magnitude<4)
+		if(GetComponent<Rigidbody>().velocity.magnitude<4)
 		{
 			Destroy(this.gameObject);
 		}
