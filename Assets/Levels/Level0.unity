@@ -39415,7 +39415,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b40d61284a4cb8e409b79d3764e17e9c, type: 3}
   stompClips:
   - {fileID: 8300000, guid: 6d7a5bb8bf867fe4e91297d92a0d1516, type: 3}
-  deathClips: []
+  deathClips:
+  - {fileID: 8300000, guid: 208d11700c67f6c44af88c017ef48236, type: 3}
   hurtClips:
   - {fileID: 8300000, guid: 4609e33f7aab2644987b4e4e91424a41, type: 3}
   powerupClips:
